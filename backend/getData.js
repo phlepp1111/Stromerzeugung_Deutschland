@@ -1,3 +1,4 @@
+import fs from "fs";
 function getTimestamps(filter, resolution) {
     fetch(
         `https://www.smard.de/app/chart_data/${filter}/DE/index_${resolution}.json`
@@ -15,11 +16,13 @@ function getTimeline(filter, resolution) {
     )
         .then((answer) => answer.json())
         .then((data) => {
-            let formattedData = data.series.map(([timestamp, value]) => [
-                new Date(timestamp).toLocaleString("de-DE"),
-                value,
-            ]);
-            console.log(formattedData);
+            let formattedData = data.series.map(([timestamp, value]) => {
+                const formattedTimestamp = new Date(timestamp).toLocaleString(
+                    "de-DE"
+                );
+                return { [formattedTimestamp]: value };
+            });
+            fs.writeFileSync("./data.json", JSON.stringify(formattedData, 5));
         });
 }
 getTimeline(4068, "quarterhour");
