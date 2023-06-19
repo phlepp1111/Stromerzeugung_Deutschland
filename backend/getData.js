@@ -5,14 +5,18 @@ function getTimestamps(filter, resolution) {
     )
         .then((answer) => answer.json())
         .then((data) => {
-            console.log(data);
+            console.log(data.timestamps.length);
+            // fs.writeFileSync(
+            //     "./dataTimestamps1225.json",
+            //     JSON.stringify(data, 5)
+            // );
         });
 }
-// getTimestamps(410, 'hour');
+getTimestamps(4387, "quarterhour");
 
 function getTimeline(filter, resolution) {
     fetch(
-        `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_${resolution}_1419807600000.json`
+        `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_${resolution}_1686520800000.json`
     )
         .then((answer) => answer.json())
         .then((data) => {
@@ -25,4 +29,4 @@ function getTimeline(filter, resolution) {
             fs.writeFileSync("./data.json", JSON.stringify(formattedData, 5));
         });
 }
-getTimeline(4068, "quarterhour");
+// getTimeline(1223, "quarterhour");
