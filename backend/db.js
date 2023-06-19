@@ -1,25 +1,14 @@
 import mariadb from "mariadb";
-import secrets from "../secrets.json";
-const pool = mariadb.createPool({
-    host: secrets.mariaDB.host,
-    user: secrets.mariaDB.user,
-    password: secrets.mariaDB.password,
-    connectionLimit: 5,
+import secrets from "../secrets.json" assert { type: "json" };
+
+const db = Object.freeze({
+    pool: mariadb.createPool({
+        host: secrets.mariaDB.host,
+        port: secrets.mariaDB.port,
+        user: secrets.mariaDB.user,
+        password: secrets.mariaDB.password,
+        connectionLimit: 50,
+        connectTimeout: 10000,
+    }),
 });
-async function asyncFunction() {
-    let conn;
-    try {
-        conn = await pool.getConnection();
-        const rows = await conn.query("SELECT 1 as val");
-        console.log(rows); //[ {val: 1}, meta: ... ]
-        const res = await conn.query("INSERT INTO myTable value (?, ?)", [
-            1,
-            "mariadb",
-        ]);
-        console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
-    } catch (err) {
-        throw err;
-    } finally {
-        if (conn) return conn.end();
-    }
-}
+export { db };
