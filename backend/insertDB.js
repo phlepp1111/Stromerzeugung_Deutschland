@@ -5,7 +5,7 @@ async function insertDB() {
     try {
         conn = await db.pool.getConnection();
         const insertQuery =
-            "INSERT INTO stromdaten.BraunkohleErzeugung(Timestamp_Unix, Menge) VALUES (?,?)";
+            "INSERT INTO StromDaten.BraunkohleErzeugung(Timestamp_Unix, Menge) VALUES (?,?)";
         // console.log(db.pool);
         const params = [1, 1];
         const result = await conn.query(insertQuery, params);
@@ -13,7 +13,7 @@ async function insertDB() {
     } catch (error) {
         console.log(error);
     } finally {
-        if (conn) return conn.release();
+        if (conn) return conn.end();
     }
 }
 insertDB();
