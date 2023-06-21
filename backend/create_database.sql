@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS StromDaten; 
 CREATE DATABASE IF NOT EXISTS StromDaten;
 
 USE StromDaten;
@@ -10,7 +11,6 @@ Menge INT);
 CREATE TABLE IF NOT EXISTS KernEnergieErzeugung (
 ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 Timestamp_Unix BIGINT,
-Datum_Zeit VARCHAR(100),
 Menge INT);
 
 CREATE TABLE IF NOT EXISTS OffshoreWindErzeugung(

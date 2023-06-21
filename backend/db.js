@@ -7,8 +7,8 @@ const db = Object.freeze({
         port: secrets.mariaDB.port,
         user: secrets.mariaDB.user,
         password: secrets.mariaDB.password,
-        connectionLimit: 50,
-        connectTimeout: 10000,
+        connectionLimit: 100,
+        connectTimeout: 50000,
     }),
 });
 export { db };

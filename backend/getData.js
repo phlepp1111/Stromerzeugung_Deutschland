@@ -1,8 +1,8 @@
-import fs from "fs";
 import insertDB from "./insertDB.js";
-async function getTimestamps(filter, resolution) {
+
+async function getTimestamps(filter) {
     return fetch(
-        `https://www.smard.de/app/chart_data/${filter}/DE/index_${resolution}.json`
+        `https://www.smard.de/app/chart_data/${filter}/DE/index_quarterhour.json`
     )
         .then((response) => response.json())
         .then((data) => {
@@ -10,20 +10,17 @@ async function getTimestamps(filter, resolution) {
         });
 }
 
-async function getTimeline(filter, resolution) {
-    getTimestamps(filter, resolution).then((timestamps) => {
+export default async function getTimeline(filter, filtername) {
+    getTimestamps(filter).then((timestamps) => {
         for (let timestamp of timestamps) {
             fetch(
-                `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_${resolution}_${timestamp}.json`
+                `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_quarterhour_${timestamp}.json`
             )
                 .then((response) => response.json())
                 .then((data) => {
-                    data.series.forEach(async (element) => {
-                        insertDB("BraunkohleErzeugung", element[0], element[1]);
-                    });
+                    insertDB(filtername, data.series);
                 });
         }
-        console.log("done.");
     });
 
     // let formattedData = data.series.map(([timestamp, value]) => {
@@ -33,5 +30,3 @@ async function getTimeline(filter, resolution) {
     //     return { [formattedTimestamp]: value };
     // });
 }
-
-getTimeline(1223, "quarterhour");
