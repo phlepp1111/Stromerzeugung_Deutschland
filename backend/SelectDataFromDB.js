@@ -15,4 +15,4 @@ export default async function SelectFromDB(table) {
         if (conn) return conn.end();
     }
 }
-SelectFromDB("BraunkohleErzeugung");
+SelectFromDB("WasserkraftErzeugung");
