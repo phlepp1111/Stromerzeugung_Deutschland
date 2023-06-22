@@ -18,7 +18,7 @@ export default async function getTimeline(filter, filtername) {
             )
                 .then((response) => response.json())
                 .then((data) => {
-                    insertDB(filtername, data.series);
+                    return insertDB(filtername, data.series);
                 });
         }
     });
