@@ -1,48 +1,6 @@
 import { db } from "./db.js";
-import allData from "./data/data_All.json" assert { type: "json" };
-
-const filterName = {
-    1223: "BraunkohleErzeugung",
-    1224: "KernenergieErzeugung",
-    1225: "OffshoreWindErzeugung",
-    1226: "WasserkraftErzeugung",
-    1227: "Erzeugung_Sonstige_Konventionell",
-    1228: "Erzeugung_Sonstige_Erneuerbar",
-    4066: "BiomasseErzeugung",
-    4067: "OnshoreWindErzeugung",
-    4068: "PhotovoltaikErzeugung",
-    4069: "SteinkohleErzeugung",
-    4070: "PumpspeicherErzeugung",
-    4071: "ErdgasErzeugung",
-    410: "Verbrauch_Gesamt",
-    4387: "Verbrauch_Pumpspeicher",
-};
-function createArrayFromJson(jsonString) {
-    // const data = JSON.parse(jsonString);
-    const result = [];
-
-    for (const key in jsonString) {
-        const keyValuePairs = jsonString[key];
-        for (const [timestamp, value] of keyValuePairs) {
-            let found = false;
-            for (const arr of result) {
-                if (arr[0] === timestamp) {
-                    arr.push(value);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                result.push([timestamp, value]);
-            }
-        }
-    }
-
-    return result;
-}
-
-const output = createArrayFromJson(allData);
-fs.writeFileSync(`./data/data_All_format.json`, JSON.stringify(output));
+import allData from "./data/data_All_format.json" assert { type: "json" };
+import fs from "fs";
 
 export default async function insertDB() {
     let conn;
@@ -64,8 +22,17 @@ export default async function insertDB() {
         Verbrauch_Gesamt,
         Verbrauch_Pumpspeicher)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    // const insertParams =
 
+    await conn.batch(insertQuery, allData, (err, res, meta) => {
+        if (err) {
+            console.error("Error loading data, reverting changes: ", err);
+        } else {
+            console.log(res);
+            console.log(meta);
+        }
+    });
+    conn.release();
+    console.log("all inserted");
     // let conn;
     // if (first === true) {
     //     try {
@@ -131,3 +98,4 @@ export default async function insertDB() {
     //     if (conn) return conn.end();
     // }
 }
+insertDB();

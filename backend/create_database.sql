@@ -58,7 +58,7 @@
 -- CREATE TABLE IF NOT EXISTS Verbrauch_Pumpspeicher (
 -- Timestamp_Unix BIGINT NOT NULL PRIMARY KEY,
 -- Menge INT);
-
+DROP TABLE IF EXISTS StromDaten;
 CREATE TABLE IF NOT EXISTS StromDaten (
     ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Timestamp_Unix BIGINT,

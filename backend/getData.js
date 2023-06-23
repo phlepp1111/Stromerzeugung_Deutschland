@@ -36,7 +36,7 @@ export default async function getTimeline() {
                 `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_quarterhour_${timestamp}.json`
             );
             let data = await response.json();
-            console.log(data.series);
+            // console.log(data.series);
             filterData = filterData.concat(data.series);
             // await insertDB(filtername, data.series, first);
             // fs.writeFileSync(
