@@ -1,4 +1,3 @@
-import insertDB from "./insertDB.js";
 import fs from "fs";
 const filterName = {
     1223: "BraunkohleErzeugung",
