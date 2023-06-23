@@ -1,7 +1,7 @@
 import getTimeline from "./getData.js";
 const filterName = {
     1223: "BraunkohleErzeugung",
-    1224: "KernEnergieErzeugung",
+    1224: "KernenergieErzeugung",
     1225: "OffshoreWindErzeugung",
     1226: "WasserkraftErzeugung",
     1227: "Erzeugung_Sonstige_Konventionell",
@@ -15,8 +15,11 @@ const filterName = {
     410: "Verbrauch_Gesamt",
     4387: "Verbrauch_Pumpspeicher",
 };
+
+// await getTimeline(410, "Verbrauch_Gesamt", true);
+
 for (let filter in filterName) {
-    await getTimeline(filter, filterName[filter]).then(() =>
+    await getTimeline(filter, filterName[filter], false).then(() =>
         console.log(`JOB DONE for ${filterName[filter]}`)
     );
 }

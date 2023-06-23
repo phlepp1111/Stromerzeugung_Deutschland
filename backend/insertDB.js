@@ -1,23 +1,68 @@
 import { db } from "./db.js";
 
-export default async function insertDB(table, data) {
+export default async function insertDB(column, data, first) {
     let conn;
-    try {
-        // console.log("data:", data);
-        conn = await db.pool.getConnection();
-        const insertQuery = `INSERT INTO StromDaten.${table}(Timestamp_Unix, Menge) VALUES (?,?)`;
-        await conn.batch(insertQuery, data, (err, res, meta) => {
-            if (err) {
-                console.error("Error loading data, reverting changes: ", err);
-            } else {
-                console.log(res);
-                console.log(meta);
-            }
-        });
-        conn.release();
-    } catch (error) {
-        console.log(error);
-    } finally {
-        if (conn) return conn.end();
+    if (first === true) {
+        try {
+            conn = await db.pool.getConnection();
+            const insertQuery = `INSERT INTO StromDaten.StromDaten (Timestamp_Unix, ${column}) VALUES (?,?)`;
+            await conn.batch(insertQuery, data, (err, res, meta) => {
+                if (err) {
+                    console.error(
+                        "Error loading data, reverting changes: ",
+                        err
+                    );
+                } else {
+                    console.log(res);
+                    console.log(meta);
+                }
+            });
+            conn.release();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            if (conn) return conn.end();
+        }
+    } else if (first === false) {
+        try {
+            conn = await db.pool.getConnection();
+            const updateQuery = `UPDATE StromDaten.StromDaten SET ${column} = ? WHERE Timestamp_Unix = ?`;
+            const updateParams = data.map((row) => [row[1], row[0]]);
+
+            await conn.batch(updateQuery, updateParams, (err, res, meta) => {
+                if (err) {
+                    console.error(
+                        "Error loading data, reverting changes:",
+                        err
+                    );
+                } else {
+                    console.log(res);
+                    console.log(meta);
+                }
+            });
+            console.log("Batch update completed successfully.");
+        } catch (error) {
+            console.log(error);
+        } finally {
+            if (conn) return conn.end();
+        }
     }
+
+    // try {
+    //     conn = await db.pool.getConnection();
+    //     const insertQuery = `INSERT INTO StromDaten.${table}(Timestamp_Unix, Menge) VALUES (?,?)`;
+    //     await conn.batch(insertQuery, data, (err, res, meta) => {
+    //         if (err) {
+    //             console.error("Error loading data, reverting changes: ", err);
+    //         } else {
+    //             console.log(res);
+    //             console.log(meta);
+    //         }
+    //     });
+    //     conn.release();
+    // } catch (error) {
+    //     console.log(error);
+    // } finally {
+    //     if (conn) return conn.end();
+    // }
 }

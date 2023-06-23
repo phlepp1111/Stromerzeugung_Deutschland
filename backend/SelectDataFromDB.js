@@ -6,7 +6,7 @@ export default async function SelectFromDB(table) {
         conn = await db.pool.getConnection();
         let rows = await conn.query(`SELECT * FROM StromDaten.${table}`);
         for (let i = 0, len = rows.length; i < len; i++) {
-            console.log(Object.values(rows[i]));
+            console.log(rows[i].Timestamp_Unix);
         }
         conn.release();
     } catch (error) {
