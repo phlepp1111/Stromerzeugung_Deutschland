@@ -1,4 +1,6 @@
 import fs from "fs";
+import cliProgress from "cli-progress";
+const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 const filterName = {
     1223: "BraunkohleErzeugung",
     1224: "KernenergieErzeugung",
@@ -28,6 +30,8 @@ async function getTimestamps(filter) {
 
 export default async function getTimeline() {
     let allData = {};
+    let barProgress = 0;
+    bar1.start(140, 0);
     for (let filter in filterName) {
         let timestamps = await getTimestamps(filter);
         let filterData = [];
@@ -45,9 +49,12 @@ export default async function getTimeline() {
             // );
         }
         allData[filterName[filter]] = filterData;
-        console.log(allData);
+        // console.log(allData);
+        barProgress = barProgress + 10;
+        bar1.update(140, barProgress);
     }
     fs.writeFileSync(`./data/data_All.json`, JSON.stringify(allData));
+    bar1.stop();
 
     // export default async function getTimeline(filter, filtername, first) {
     //     let timestamps = await getTimestamps(filter);
