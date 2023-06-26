@@ -1,4 +1,5 @@
 import allData from "./data/data_All.json" assert { type: "json" };
+import fs from "fs";
 
 export function createArrayFromJson(jsonString) {
     const result = [];
