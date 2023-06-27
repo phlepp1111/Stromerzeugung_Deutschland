@@ -25,7 +25,7 @@ app.get("/lastgraph", async (req, res) => {
     try {
         console.log("received a get request at /lastgraph");
         const rows = await SelectLast1000();
-        console.log(rows[0]);
+        console.log(rows[500]);
         res.send(rows);
     } catch (error) {
         console.log(error);

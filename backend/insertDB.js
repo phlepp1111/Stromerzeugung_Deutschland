@@ -7,6 +7,7 @@ export default async function insertDB() {
     conn = await db.pool.getConnection();
     const insertQuery = `INSERT INTO StromDaten.StromDaten (
         Timestamp_Unix,
+        Verbrauch_Gesamt,
         BraunkohleErzeugung,
         KernenergieErzeugung,
         OffshoreWindErzeugung,
@@ -19,7 +20,6 @@ export default async function insertDB() {
         SteinkohleErzeugung,
         PumpspeicherErzeugung,
         ErdgasErzeugung,
-        Verbrauch_Gesamt,
         Verbrauch_Pumpspeicher)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
