@@ -1,25 +1,18 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
 
 const chartRef = ref(null)
 const data = ref([])
-let chartInstance = null
-const isDataLoaded = ref(false)
 
 onMounted(fetchLastGraph)
-watch(isDataLoaded, (newValue) => {
-  if (newValue) {
-    destroyChart()
-    createChart()
-  }
-})
 
 async function fetchLastGraph() {
   try {
     console.log('fetch sent')
     const response = await fetch('/lastgraph')
     data.value = await response.json()
+    createChart()
   } catch (error) {
     console.log(error)
   }
@@ -32,68 +25,50 @@ function createChart() {
   )
   const datasets = []
 
-  if (chartInstance) {
-    chartInstance.data.labels = labels
-    chartInstance.data.datasets = []
-  } else {
-    chartInstance = new Chart(chartRef.value, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            stacked: true
-          },
-          y: {
-            stacked: true,
-            beginAtZero: true,
-            display: false
-          }
-        }
-      }
-    })
-  }
-  for (const category in data.value[0]) {
-    if (
-      category !== 'ID' &&
-      category !== 'Verbrauch_Gesamt' &&
-      category !== 'Verbrauch_Pumpspeicher' &&
-      data.value[0][category] !== null
-    ) {
-      datasets.push({
-        label: category,
-        data: data.value.map((item) => item[category]),
-        backgroundColor: getRandomColor(),
-        borderWidth: 1
-      })
-    }
-  }
+  const categories = Object.keys(data.value[0]).filter(
+    (category) => category !== 'ID' && category !== 'Timestamp_Unix'
+  )
 
-  data.value.forEach((item) => {
-    datasets.forEach((dataset, index) => {
-      const category = Object.keys(item)[index]
-      if (
-        category !== 'ID' &&
-        category !== 'Verbrauch_Gesamt' &&
-        category !== 'Verbrauch_Pumpspeicher' &&
-        item[category] !== null
-      ) {
-        dataset.data.push(item[category])
-      }
+  const categoryLabels = []
+
+  categories.forEach((category) => {
+    const chartData = data.value.map((item) => item[category])
+    datasets.push({
+      label: '',
+      data: chartData,
+      backgroundColor: getRandomColor(),
+      borderWidth: 1,
+      fill: false,
+      pointRadius: 1
     })
+    categoryLabels.push(category)
   })
 
-  chartInstance.update()
-}
-function destroyChart() {
-  if (chartInstance) {
-    chartInstance.destroy()
-    chartInstance = null
+  datasets.forEach((dataset, index) => {
+    dataset.label = categoryLabels[index]
+  })
+
+  const chartConfig = {
+    type: 'line',
+    data: {
+      labels,
+      datasets
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          display: true
+        },
+        y: {
+          display: true,
+          beginAtZero: true
+        }
+      }
+    }
   }
+  const ctx = chartRef.value.getContext('2d')
+  new Chart(ctx, chartConfig)
 }
 
 function getRandomColor() {
