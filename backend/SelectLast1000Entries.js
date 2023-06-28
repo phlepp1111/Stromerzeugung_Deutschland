@@ -5,11 +5,8 @@ export default async function SelectLast1000() {
     try {
         conn = await db.pool.getConnection();
         let rows = await conn.query(
-            `SELECT * FROM StromDaten.StromDaten ORDER BY Timestamp_Unix DESC LIMIT 1000; `
+            `SELECT * FROM StromDaten.StromDaten WHERE Verbrauch_Gesamt IS NOT NULL ORDER BY Timestamp_Unix DESC LIMIT 1000 ; `
         );
-        // for (let i = 0, len = rows.length; i < len; i++) {
-        //     console.log(rows[i]);
-        // }
         conn.release();
         return rows;
     } catch (error) {

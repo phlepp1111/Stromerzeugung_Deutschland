@@ -1,16 +1,6 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
-</script>
-
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>This is the start page</h3>
+    <h2>Hier schauen wir uns die Stromerzeugungsdaten der letzten Zeit an.</h2>
   </div>
 </template>
 
@@ -20,10 +10,6 @@ h1 {
   font-size: 2.6rem;
   position: relative;
   top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
 }
 
 .greetings h1,

@@ -2,6 +2,7 @@ import fs from "fs";
 import cliProgress from "cli-progress";
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 const filterName = {
+    410: "Verbrauch_Gesamt",
     1223: "BraunkohleErzeugung",
     1224: "KernenergieErzeugung",
     1225: "OffshoreWindErzeugung",
@@ -14,7 +15,6 @@ const filterName = {
     4069: "SteinkohleErzeugung",
     4070: "PumpspeicherErzeugung",
     4071: "ErdgasErzeugung",
-    410: "Verbrauch_Gesamt",
     4387: "Verbrauch_Pumpspeicher",
 };
 
@@ -40,44 +40,13 @@ export default async function getTimeline() {
                 `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_quarterhour_${timestamp}.json`
             );
             let data = await response.json();
-            // console.log(data.series);
             filterData = filterData.concat(data.series);
-            // await insertDB(filtername, data.series, first);
-            // fs.writeFileSync(
-            //     `./data/data_${filterName}.json`,
-            //     JSON.stringify(allData)
-            // );
         }
         allData[filterName[filter]] = filterData;
-        // console.log(allData);
         barProgress = barProgress + 10;
         bar1.update(140, barProgress);
     }
     fs.writeFileSync(`./data/data_All.json`, JSON.stringify(allData));
     bar1.stop();
-
-    // export default async function getTimeline(filter, filtername, first) {
-    //     let timestamps = await getTimestamps(filter);
-    //     let allData = [];
-    //     for (let timestamp of timestamps) {
-    //         let response = await fetch(
-    //             `https://www.smard.de/app/chart_data/${filter}/DE/${filter}_DE_quarterhour_${timestamp}.json`
-    //         );
-    //         let data = await response.json();
-    //         console.log(data.series);
-    //         allData = allData.concat(data.series);
-    //         // await insertDB(filtername, data.series, first);
-    //         fs.writeFileSync(
-    //             `./data/data_${filtername}.json`,
-    //             JSON.stringify(allData)
-    //         );
-    //     }
-
-    // let formattedData = data.series.map(([timestamp, value]) => {
-    //     const formattedTimestamp = new Date(
-    //         timestamp
-    //     ).toLocaleString("de-DE");
-    //     return { [formattedTimestamp]: value };
-    // });
 }
 getTimeline();

@@ -1,6 +1,5 @@
 import { db } from "./db.js";
 import allData from "./data/data_All_format.json" assert { type: "json" };
-import fs from "fs";
 
 export default async function insertDB() {
     let conn;
