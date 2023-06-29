@@ -127,4 +127,5 @@ dist
 .pnp.*
 
 secrets.json
+backlog.md
 /backend/data

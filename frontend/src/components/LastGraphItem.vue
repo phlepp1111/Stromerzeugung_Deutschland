@@ -21,7 +21,7 @@ function createChart() {
   if (!chartRef.value || data.value.length === 0) return
 
   const labels = data.value.map((item) =>
-    new Date(Number(item.Timestamp_Unix)).toISOString().slice(0, 19).replace('T', ' ')
+    new Date(Number(item.Timestamp_Unix)).toISOString().slice(0, 16).replace('T', ' ')
   )
   const datasets = []
 
@@ -33,13 +33,16 @@ function createChart() {
 
   categories.forEach((category) => {
     const chartData = data.value.map((item) => item[category])
+    const color = getRandomColor()
     datasets.push({
       label: '',
       data: chartData,
-      backgroundColor: getRandomColor(),
+      borderColor: color,
+      backgroundColor: color,
       borderWidth: 1,
       fill: false,
-      pointRadius: 1
+      pointRadius: 0,
+      spanGaps: true
     })
     categoryLabels.push(category)
   })
@@ -63,6 +66,17 @@ function createChart() {
         y: {
           display: true,
           beginAtZero: true
+        }
+      },
+      spanGaps: true,
+      datasets: {
+        line: {
+          pointRadius: 0
+        }
+      },
+      elements: {
+        point: {
+          radius: 0
         }
       }
     }

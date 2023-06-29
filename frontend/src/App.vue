@@ -6,8 +6,7 @@ import StartPage from './components/StartPage.vue'
 <template>
   <header>
     <div class="wrapper">
-      <StartPage msg="Here we go!" />
-
+      <StartPage />
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -23,11 +22,6 @@ import StartPage from './components/StartPage.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
 }
 
 nav {
@@ -60,10 +54,6 @@ nav a:first-of-type {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
   }
 
   header .wrapper {

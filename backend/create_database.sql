@@ -61,7 +61,7 @@
 DROP TABLE IF EXISTS StromDaten;
 CREATE TABLE IF NOT EXISTS StromDaten (
     ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-    Timestamp_Unix BIGINT,
+    Timestamp_Unix BIGINT UNIQUE,
     Verbrauch_Gesamt INT,
     BraunkohleErzeugung INT,
     KernenergieErzeugung INT,
