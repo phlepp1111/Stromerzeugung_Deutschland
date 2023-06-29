@@ -1,7 +1,7 @@
 import fs from "fs";
 import cliProgress from "cli-progress";
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-const filterName = {
+export const filterName = {
     410: "Verbrauch_Gesamt",
     1223: "BraunkohleErzeugung",
     1224: "KernenergieErzeugung",
@@ -18,7 +18,7 @@ const filterName = {
     4387: "Verbrauch_Pumpspeicher",
 };
 
-async function getTimestamps(filter) {
+export async function getTimestamps(filter) {
     return fetch(
         `https://www.smard.de/app/chart_data/${filter}/DE/index_quarterhour.json`
     )
@@ -43,10 +43,10 @@ export default async function getTimeline() {
             filterData = filterData.concat(data.series);
         }
         allData[filterName[filter]] = filterData;
-        barProgress = barProgress + 10;
-        bar1.update(140, barProgress);
+        barProgress += 10;
+        bar1.update(barProgress);
     }
     fs.writeFileSync(`./data/data_All.json`, JSON.stringify(allData));
     bar1.stop();
 }
-getTimeline();
+// getTimeline();
