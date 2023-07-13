@@ -24,5 +24,5 @@ export function createArrayFromJson(jsonString) {
     return result;
 }
 
-const output = createArrayFromJson(allData);
-fs.writeFileSync(`./data/data_All_format.json`, JSON.stringify(output));
+// const output = createArrayFromJson(allData);
+// fs.writeFileSync(`./data/data_All_format.json`, JSON.stringify(output));

@@ -1,6 +1,6 @@
 import fs from "fs";
 import cliProgress from "cli-progress";
-const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+
 export const filterName = {
     410: "Verbrauch_Gesamt",
     1223: "BraunkohleErzeugung",
@@ -29,6 +29,11 @@ export async function getTimestamps(filter) {
 }
 
 export default async function getTimeline() {
+    const bar1 = new cliProgress.SingleBar(
+        {},
+        cliProgress.Presets.shades_classic
+    );
+
     let allData = {};
     let barProgress = 0;
     bar1.start(140, 0);
