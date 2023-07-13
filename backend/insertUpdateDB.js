@@ -1,7 +1,7 @@
 import { db } from "./db.js";
 import updateData from "./data/data_update_format.json" assert { type: "json" };
 
-async function insertUpdate() {
+export async function insertUpdate() {
     let conn = await db.pool.getConnection();
     for (let data of updateData) {
         let insertQuery = `INSERT INTO StromDaten.StromDaten (
@@ -47,6 +47,8 @@ async function insertUpdate() {
         });
     }
     conn.release();
-    console.log("update inserted");
+    // console.log("update inserted");
+    let done = "new data inserted";
+    return done;
 }
-insertUpdate();
+// insertUpdate();

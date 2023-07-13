@@ -2,7 +2,7 @@ import fs from "fs";
 import { filterName } from "./getAllData.js";
 import { checkUpdate } from "./checkUpdate.js";
 
-async function getUpdateData() {
+export async function getUpdateData() {
     let updateData = {};
     let timestamps = await checkUpdate();
     for (let filter in filterName) {
@@ -17,6 +17,8 @@ async function getUpdateData() {
         updateData[filterName[filter]] = filterData;
     }
     fs.writeFileSync(`./data/data_update.json`, JSON.stringify(updateData));
-    console.log("data_update saved!");
+    // console.log("data_update saved!");
+    let done = "data_update saved!";
+    return done;
 }
 // getUpdateData();
