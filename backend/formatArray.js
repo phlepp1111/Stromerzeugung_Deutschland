@@ -1,7 +1,7 @@
 import allData from "./data/data_All.json" assert { type: "json" };
 import fs from "fs";
 
-export function createArrayFromJson(jsonString) {
+export async function createArrayFromJson(jsonString) {
     const result = [];
 
     for (const key in jsonString) {
@@ -24,5 +24,6 @@ export function createArrayFromJson(jsonString) {
     return result;
 }
 
-// const output = createArrayFromJson(allData);
+// const output = await createArrayFromJson(allData);
 // fs.writeFileSync(`./data/data_All_format.json`, JSON.stringify(output));
+// console.log("formatted array created");

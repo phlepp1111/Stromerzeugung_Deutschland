@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 
 import SelectLast1000 from "./SelectLast1000Entries.js";
+import SelectLastWeek from "./selectLastWeek.js";
 
 const app = express();
 
@@ -25,8 +26,50 @@ app.get("/lastgraph", async (req, res) => {
     try {
         console.log("received a get request at /lastgraph");
         const rows = await SelectLast1000();
-        console.log(rows[500]);
         res.send(rows);
+    } catch (error) {
+        console.log(error);
+    }
+});
+app.get("/lastweek", async (req, res) => {
+    try {
+        console.log("received a get request at /lastweek");
+        const rows = await SelectLastWeek();
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+    }
+});
+app.get("/lastgreen", async (req, res) => {
+    try {
+        console.log("received a get request at /lastgreen");
+        const rows = await SelectLastWeek();
+        let greenArray = [];
+        rows.forEach((object) => {
+            let greenObject = {
+                ID: object.ID,
+                Timestamp_Unix: object.Timestamp_Unix,
+                Verbrauch_Gesamt: object.Verbrauch_Gesamt,
+                Verbrauch_Pumpspeicher: object.Verbrauch_Pumpspeicher,
+                Erzeugung_Erneuerbar:
+                    object.OffshoreWindErzeugung +
+                    object.WasserkraftErzeugung +
+                    object.Erzeugung_Sonstige_Erneuerbar +
+                    object.OnshoreWindErzeugung +
+                    object.BiomasseErzeugung +
+                    object.PhotovoltaikErzeugung +
+                    object.PumpspeicherErzeugung,
+                Erzeugung_Konventionell:
+                    object.BraunkohleErzeugung +
+                    object.KernenergieErzeugung +
+                    object.Erzeugung_Sonstige_Konventionell +
+                    object.SteinkohleErzeugung +
+                    object.ErdgasErzeugung,
+            };
+            greenArray.push(greenObject);
+        });
+        console.log(greenArray[500]);
+        res.send(greenArray);
     } catch (error) {
         console.log(error);
     }

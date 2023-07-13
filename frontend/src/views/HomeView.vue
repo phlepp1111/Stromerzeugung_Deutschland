@@ -1,9 +1,11 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import LastGreen from '../components/LastGreen.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <div class="LastGreen">
+      <LastGreen />
+    </div>
   </main>
 </template>
