@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 
 import SelectLast1000 from "./SelectLast1000Entries.js";
 import SelectLastWeek from "./selectLastWeek.js";
+import { updateDB } from "./updateDB.js";
 
 const app = express();
 
@@ -70,6 +71,15 @@ app.get("/lastgreen", async (req, res) => {
         });
         console.log(greenArray[500]);
         res.send(greenArray);
+    } catch (error) {
+        console.log(error);
+    }
+});
+app.get("/update", async (req, res) => {
+    try {
+        console.log("received a get request at /update");
+        const rows = await updateDB();
+        res.send(rows);
     } catch (error) {
         console.log(error);
     }

@@ -53,5 +53,6 @@ export default async function getTimeline() {
     }
     fs.writeFileSync(`./data/data_All.json`, JSON.stringify(allData));
     bar1.stop();
+    return "data_All saved!";
 }
 // getTimeline();

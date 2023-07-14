@@ -9,6 +9,7 @@ export async function updateDB() {
     console.log(update2);
     let update3 = await insertUpdate();
     console.log(update3);
-    return;
+    let done = { done: "Database successfully updated" };
+    return done;
 }
-updateDB();
+// updateDB();

@@ -17,7 +17,6 @@ export async function getUpdateData() {
         updateData[filterName[filter]] = filterData;
     }
     fs.writeFileSync(`./data/data_update.json`, JSON.stringify(updateData));
-    // console.log("data_update saved!");
     let done = "data_update saved!";
     return done;
 }
