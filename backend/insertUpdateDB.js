@@ -3,6 +3,7 @@ import updateData from "./data/data_update_format.json" assert { type: "json" };
 
 export async function insertUpdate() {
     let conn = await db.pool.getConnection();
+    console.log("updating database");
     for (let data of updateData) {
         let insertQuery = `INSERT INTO StromDaten.StromDaten (
         Timestamp_Unix,
@@ -47,7 +48,6 @@ export async function insertUpdate() {
         });
     }
     conn.release();
-    // console.log("update inserted");
     let done = "new data inserted";
     return done;
 }

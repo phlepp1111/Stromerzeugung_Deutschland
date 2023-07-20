@@ -52,7 +52,7 @@ function createChart() {
   })
 
   const chartConfig = {
-    type: 'line',
+    type: 'bar',
     data: {
       labels,
       datasets
@@ -61,11 +61,13 @@ function createChart() {
       responsive: true,
       scales: {
         x: {
-          display: true
+          display: true,
+          stacked: true
         },
         y: {
           display: true,
-          beginAtZero: true
+          beginAtZero: true,
+          stacked: true
         }
       },
       spanGaps: true,
