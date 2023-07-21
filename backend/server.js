@@ -7,6 +7,7 @@ import SelectLast1000 from "./SelectLast1000Entries.js";
 import SelectLastWeek from "./selectLastWeek.js";
 import { updateDB } from "./updateDB.js";
 import SelectLast4weeks from "./selectLast4Weeks.js";
+import { calculateAverageBestTime } from "./calculateAverageBestTime.js";
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.get("/", (req, res) => {
 app.get("/:param", async (req, res) => {
     if (req.params.param === "update") {
         try {
-            console.log("received a get request at /update");
+            // console.log("received a get request at /update");
             const rows = await updateDB();
             res.send(rows);
         } catch (error) {
@@ -35,7 +36,7 @@ app.get("/:param", async (req, res) => {
         }
     } else if (req.params.param === "lastweek") {
         try {
-            console.log("received a get request at /lastweek");
+            // console.log("received a get request at /lastweek");
             const rows = await SelectLastWeek();
             res.send(rows);
         } catch (error) {
@@ -43,13 +44,12 @@ app.get("/:param", async (req, res) => {
         }
     } else if (req.params.param === "lastgreen") {
         try {
-            console.log("received a get request at /lastgreen");
+            // console.log("received a get request at /lastgreen");
             const rows = await SelectLastWeek();
             let greenArray = [];
             rows.forEach((object) => {
                 let greenObject = {
                     Timestamp_Unix: object.Timestamp_Unix,
-                    // Verbrauch_Gesamt: object.Verbrauch_Gesamt,
                     Erzeugung_Erneuerbar:
                         object.OffshoreWindErzeugung +
                         object.WasserkraftErzeugung +
@@ -73,7 +73,7 @@ app.get("/:param", async (req, res) => {
         }
     } else if (req.params.param === "lastgraph") {
         try {
-            console.log("received a get request at /lastgraph");
+            // console.log("received a get request at /lastgraph");
             const rows = await SelectLast1000();
             res.send(rows);
         } catch (error) {
@@ -81,7 +81,7 @@ app.get("/:param", async (req, res) => {
         }
     } else if (req.params.param === "bestaveragedaytime") {
         try {
-            console.log("received a get request at /bestaveragedaytime");
+            // console.log("received a get request at /bestaveragedaytime");
             const rows = await SelectLast4weeks();
             let greenArray = [];
             rows.forEach((object) => {
@@ -104,7 +104,9 @@ app.get("/:param", async (req, res) => {
                 };
                 greenArray.push(greenObject);
             });
-            res.send(greenArray);
+
+            const averagetime = await calculateAverageBestTime(greenArray);
+            res.send({ averagetime: averagetime });
         } catch (error) {
             console.log(error);
         }

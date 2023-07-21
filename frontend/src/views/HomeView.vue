@@ -5,8 +5,12 @@ import LastGreen from '../components/LastGreen.vue'
 
 <template>
   <main>
+    <br />
+    <br />
     <div class="LastGreen">
       <BestAverageDaytime />
+      <br />
+      <br />
       <LastGreen />
     </div>
   </main>
