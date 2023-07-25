@@ -12,4 +12,4 @@ export async function updateDB() {
     let done = { done: "Database successfully updated" };
     return done;
 }
-// updateDB();
+//updateDB();

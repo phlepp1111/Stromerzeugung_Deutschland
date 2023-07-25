@@ -1,7 +1,9 @@
 import { db } from "./db.js";
-import updateData from "./data/data_update_format.json" assert { type: "json" };
+import fs from "fs";
 
 export async function insertUpdate() {
+    const content = fs.readFileSync("./data/data_update_format.json", "utf8");
+    const updateData = JSON.parse(content);
     let conn = await db.pool.getConnection();
     console.log("updating database");
     for (let data of updateData) {
