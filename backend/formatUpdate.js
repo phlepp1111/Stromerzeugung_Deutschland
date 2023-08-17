@@ -7,7 +7,6 @@ export async function formatUpdate() {
     console.log("formatting update data");
     const output = await createArrayFromJson(updateData);
     fs.writeFileSync(`./data/data_update_format.json`, JSON.stringify(output));
-    // console.log("data_update_format saved!");
     let done = "data_update_format saved!";
     return done;
 }

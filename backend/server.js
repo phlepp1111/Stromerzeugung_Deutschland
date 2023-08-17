@@ -106,7 +106,12 @@ app.get("/:param", async (req, res) => {
             });
 
             const averagetime = await calculateAverageBestTime(greenArray);
-            res.send({ averagetime: averagetime });
+            console.log("averagetime: ", averagetime);
+            res.send({
+                averageTime: averagetime.avgTime,
+                minTime: averagetime.minTime,
+                maxTime: averagetime.maxTime,
+            });
         } catch (error) {
             console.log(error);
         }

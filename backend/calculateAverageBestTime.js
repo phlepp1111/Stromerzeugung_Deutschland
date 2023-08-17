@@ -28,9 +28,31 @@ export async function calculateAverageBestTime(greenArray) {
     });
     const timesArray = Object.values(dataByDay).map((item) => item.zeitHighest);
     console.log("timesarray: ", timesArray);
+    const timeObjects = timesArray.map((timeStr) => {
+        const [hours, minutes] = timeStr.split(":");
+        const date = new Date();
+        date.setHours(parseInt(hours, 10));
+        date.setMinutes(parseInt(minutes, 10));
+        return date;
+    });
+    const minTime = new Date(Math.min(...timeObjects));
+    const maxTime = new Date(Math.max(...timeObjects));
+    const minTimeString = `${minTime.getHours()}:${minTime
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+    const maxTimeString = `${maxTime.getHours()}:${maxTime
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
     const averageTime = getAverageTime(timesArray);
-    console.log("averageTime: ", averageTime);
-    return averageTime;
+    // console.log("averageTime: ", averageTime);
+    const result = {
+        minTime: minTimeString,
+        maxTime: maxTimeString,
+        avgTime: averageTime,
+    };
+    return result;
 }
 function getAverageTime(times) {
     const totalMilliseconds = times.reduce((acc, curr) => {
@@ -49,3 +71,4 @@ function getAverageTime(times) {
     const avgTime = `${avgHours}:${avgMinutes}`;
     return avgTime;
 }
+function getMinAndMaxTimes() {}
