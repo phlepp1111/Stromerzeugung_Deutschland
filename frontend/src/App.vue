@@ -13,7 +13,7 @@ async function update() {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/lastgraph">Last Graph</RouterLink>
+        <RouterLink to="/lastgraph">Letzte Woche</RouterLink>
         <button @click="update">Update Database</button>
       </nav>
       <div class="content">
@@ -21,6 +21,9 @@ async function update() {
       </div>
     </div>
   </header>
+  <footer>
+    <p>©Philipp Neumann, 2023</p>
+  </footer>
 </template>
 
 <style scoped>

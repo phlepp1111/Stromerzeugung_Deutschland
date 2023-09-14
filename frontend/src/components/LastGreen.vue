@@ -5,9 +5,9 @@ import Chart from 'chart.js/auto'
 const chartRef = ref(null)
 const data = ref([])
 
-onMounted(fetchLastGraph)
+onMounted(fetchLastGreen)
 
-async function fetchLastGraph() {
+async function fetchLastGreen() {
   try {
     console.log('fetch sent')
     const response = await fetch('/lastgreen')
