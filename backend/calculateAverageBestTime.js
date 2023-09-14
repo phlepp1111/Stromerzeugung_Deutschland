@@ -46,7 +46,6 @@ export async function calculateAverageBestTime(greenArray) {
         .toString()
         .padStart(2, "0")}`;
     const averageTime = getAverageTime(timesArray);
-    // console.log("averageTime: ", averageTime);
     const result = {
         minTime: minTimeString,
         maxTime: maxTimeString,

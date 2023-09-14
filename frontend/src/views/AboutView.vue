@@ -12,10 +12,12 @@
     </p>
     <br />
     <p>
-      Diese Seite soll dabei helfen, den Zeitpunkt zu finden, zu dem der Strom am grünsten ist. Dazu
-      werden die Daten der letzten 4 Wochen ausgewertet und der Zeitpunkt mit dem größten Anteil an
-      erneuerbarer Energie ermittelt. Außerdem wird die beste Zeitspanne angezeigt, in der der
-      Anteil an erneuerbarer Energie am größten ist.
+      Dieses Projekt soll dabei helfen, den Zeitpunkt zu finden, zu dem der Strom in Deutschland am
+      grünsten ist, d.h. der Zeitpunkt mit dem höchsten Anteil an erneuerbarer Energieerzeugung.
+      Dazu werden die Daten der letzten 4 Wochen ausgewertet und der Zeitpunkt mit dem größten
+      Anteil an erneuerbarer Energie ermittelt. Außerdem wird die Zeitspanne angezeigt, in der der
+      Anteil an erneuerbarer Energie am größten ist. Die Daten dafür kommen direkt von der API des
+      Bundes (https://github.com/bundesAPI/smard-api)
     </p>
   </div>
 </template>
@@ -27,10 +29,4 @@
 h1 {
   text-align: center;
 }
-/* @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-  }
-} */
 </style>
